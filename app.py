@@ -1,15 +1,31 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt 
+import requests
 
-rand = np.random.normal(1, 2, size=20)
-fig,ax = plt.subplots()
-ax.hist(rand, bins=15)
-st.pyplot(fig)
+# 기상청 API 엔드포인트 및 API 키
+API_ENDPOINT = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
+API_KEY = "d0mP886Qs5a3Y4SvZex0oXe%2FDGPx%2BkWUzw8y8sym7k23cQ2tIrgqsiK5TvbotTaODr74xm3rCD5wy899P%2BoTSg%3D%3D"
 
-df = pd.DataFrame(np.random.randn(500, 2) / [50, 50] + [37.76, -122.4], columns=['lat', 'lon'])
-st.map(df)
+# 기상청 API 요청 함수
+def fetch_weather_data(city):
+    # API 요청 URL 구성
+    url = f"{API_ENDPOINT}?serviceKey={API_KEY}&city={city}"
+    
+    # API 요청 보내기
+    response = requests.get(url)
+    
+    # 응답 데이터 추출
+    data = response.json()
+    
+    return data
 
-x = st.slider('Select a value')
-st.write(x, 'squared is', x * x)
+# 웹 애플리케이션 구성
+st.title("기상 정보 조회")
+city = st.text_input("도시 입력", "서울")
+
+if st.button("조회"):
+    # 기상청 API 호출
+    weather_data = fetch_weather_data(city)
+    
+    # 데이터 출력
+    st.subheader(f"{city}의 기상 정보")
+    st.write(weather_data)
