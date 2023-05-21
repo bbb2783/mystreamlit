@@ -37,7 +37,13 @@ def fetch_weather_data(city):
 def extract_data_from_xml(root):
     extracted_data = []
     
-    # 데이터 추출 로직 작성
+    # XML 파싱 및 데이터 추출
+    for item in root.iter('item'):
+        # 원하는 항목의 값을 추출하여 리스트에 추가
+        category = item.findtext('category')
+        fcst_time = item.findtext('fcstTime')
+        fcst_value = item.findtext('fcstValue')
+        extracted_data.append({'category': category, 'fcstTime': fcst_time, 'fcstValue': fcst_value})
     
     return extracted_data
 
@@ -50,6 +56,4 @@ if st.button("조회"):
     
     if weather_data:
         st.subheader(f"{city}의 기상 정보")
-        st.write(weather_data)
-        
-
+        st.table(weather_data)
