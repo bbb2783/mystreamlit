@@ -9,17 +9,17 @@ API_ENDPOINT = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
 API_KEY = "d0mP886Qs5a3Y4SvZex0oXe%2FDGPx%2BkWUzw8y8sym7k23cQ2tIrgqsiK5TvbotTaODr74xm3rCD5wy899P%2BoTSg%3D%3D"
 
 
-def fetch_weather_data(city):
+def fetch_weather_data(city, base_date, base_time, nx, ny):
     url = f"{API_ENDPOINT}/getUltraSrtNcst"
     params = {
         'serviceKey': API_KEY,
         'pageNo': '1',
         'numOfRows': '10',
         'dataType': 'XML',
-        'base_date': '20210628',
-        'base_time': '0600',
-        'nx': '55',
-        'ny': '127'
+        'base_date': base_date,
+        'base_time': base_time,
+        'nx': nx,
+        'ny': ny
     }
     
     try:
@@ -37,6 +37,7 @@ def fetch_weather_data(city):
         st.error("기상청 API 응답 처리 오류: {}".format(str(e)))
         return None
 
+
 def extract_data_from_xml(root):
     extracted_data = []
     
@@ -53,9 +54,13 @@ def extract_data_from_xml(root):
 
 st.title("기상 정보 조회")
 city = st.text_input("도시 입력", "서울")
+base_date = st.text_input("기준 날짜 입력 (예: 20210628)", "20210628")
+base_time = st.text_input("기준 시간 입력 (예: 0600)", "0600")
+nx = st.text_input("X 좌표 입력", "55")
+ny = st.text_input("Y 좌표 입력", "127")
 
 if st.button("조회"):
-    weather_data = fetch_weather_data(city)
+    weather_data = fetch_weather_data(city, base_date, base_time, nx, ny)
     
     if weather_data:
         st.subheader(f"{city}의 기상 정보")
@@ -85,3 +90,4 @@ if st.button("조회"):
             plt.ylabel('값')
             plt.xticks(rotation=45)
             st.pyplot(plt)
+
