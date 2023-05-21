@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 API_ENDPOINT = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
-API_KEY = "d0mP886Qs5a3Y4SvZex0oXe/DGPx+kWUzw8y8sym7k23cQ2tIrgqsiK5TvbotTaODr74xm3rCD5wy899P+oTSg=="
+API_KEY = "d0mP886Qs5a3Y4SvZex0oXe%2FDGPx%2BkWUzw8y8sym7k23cQ2tIrgqsiK5TvbotTaODr74xm3rCD5wy899P%2BoTSg%3D%3D"
 
 
 def fetch_weather_data(city):
