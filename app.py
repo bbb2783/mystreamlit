@@ -35,10 +35,12 @@ def fetch_weather_data(city):
         return None
 
 def extract_data_from_xml(root):
-    # XML 데이터 추출 및 처리하는 로직을 작성해야 함
-    # 필요한 데이터를 추출하여 반환하는 형태로 작성
+    extracted_data = []
+    
+    # 데이터 추출 로직 작성
     
     return extracted_data
+
 
 st.title("기상 정보 조회")
 city = st.text_input("도시 입력", "서울")
@@ -49,3 +51,5 @@ if st.button("조회"):
     if weather_data:
         st.subheader(f"{city}의 기상 정보")
         st.write(weather_data)
+        
+
